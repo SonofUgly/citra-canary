@@ -394,14 +394,26 @@ void RendererOpenGL::DrawScreens() {
     glActiveTexture(GL_TEXTURE0);
     glUniform1i(uniform_color_texture, 0);
 
-    if (layout.top_screen_enabled) {
-        DrawSingleScreenRotated(screen_infos[0], (float)top_screen.left, (float)top_screen.top,
-                                (float)top_screen.GetWidth(), (float)top_screen.GetHeight());
-    }
-    if (layout.bottom_screen_enabled) {
-        DrawSingleScreenRotated(screen_infos[1], (float)bottom_screen.left,
+    if (Settings::values.swap_screen) {
+        if (layout.bottom_screen_enabled) {
+            DrawSingleScreenRotated(screen_infos[1], (float)bottom_screen.left,
                                 (float)bottom_screen.top, (float)bottom_screen.GetWidth(),
                                 (float)bottom_screen.GetHeight());
+        }
+        if (layout.top_screen_enabled) {
+            DrawSingleScreenRotated(screen_infos[0], (float)top_screen.left, (float)top_screen.top,
+                                (float)top_screen.GetWidth(), (float)top_screen.GetHeight());
+        }
+    } else {
+        if (layout.top_screen_enabled) {
+            DrawSingleScreenRotated(screen_infos[0], (float)top_screen.left, (float)top_screen.top,
+                                (float)top_screen.GetWidth(), (float)top_screen.GetHeight());
+        }
+        if (layout.bottom_screen_enabled) {
+            DrawSingleScreenRotated(screen_infos[1], (float)bottom_screen.left,
+                                (float)bottom_screen.top, (float)bottom_screen.GetWidth(),
+                                (float)bottom_screen.GetHeight());
+        }
     }
 
     m_current_frame++;
